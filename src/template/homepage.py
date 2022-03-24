@@ -4,7 +4,7 @@ from PIL import Image
 
 
 class HomePageSetup:
-
+    """Sets up template template for the homepage with elements shown upon initial page load"""
     def setup_home(self):
 
         self._set_title()
