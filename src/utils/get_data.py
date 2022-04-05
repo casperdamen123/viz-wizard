@@ -24,6 +24,8 @@ def get_random_columns_df(df: pd.DataFrame, n: int) -> pd.DataFrame:
         df (pd.Dataframe): Dataframe with randomly chosen data columns
     """
     columns = random.sample(df.columns.tolist(), n)
+    if n == 1:
+        columns = columns[0]
     return df[columns]
 
 
@@ -42,12 +44,12 @@ def get_number_of_numeric_columns(df: pd.DataFrame) -> int:
     """Get the number of numeric columns from dataframe
     Args:
         df (pd.Dataframe): Original dataframe
-        n (int): Number of columns names to get
     Returns:
-        columns (List[str]): List with column names
+        length (int): Number of numeric columns
     """
     data = get_numeric_data(df)
-    return len(data.columns)
+    length = len(data.columns)
+    return length
 
 
 def get_text_data(df: pd.DataFrame) -> pd.DataFrame:
@@ -61,12 +63,24 @@ def get_text_data(df: pd.DataFrame) -> pd.DataFrame:
     return text_df
 
 
-def get_numeric_and_text_columns(df: pd.DataFrame):
+def get_number_of_text_columns(df: pd.DataFrame) -> int:
+    """Get the number of numeric columns from dataframe
+    Args:
+        df (pd.Dataframe): Original dataframe
+    Returns:
+        length (int): Number of text columns
+    """
+    data = get_text_data(df)
+    length = len(data.columns)
+    return length
+
+
+def get_numeric_and_text_df(df: pd.DataFrame):
     """Get numeric and text columns from dataframe
     Args:
         df (pd.DataFrame): Dataframe with all data
     Returns:
         num_text_df (pd.DataFrame): Dataframe with only text and numeric columns
     """
-    num_text_df = df.select_dtypes(include=['numeric', 'object'])
+    num_text_df = df.select_dtypes(include=['number', 'object'])
     return num_text_df

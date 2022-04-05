@@ -19,8 +19,8 @@ class HomePageSetup:
     @staticmethod
     def _set_images():
         """Set main images"""
-        wiz_image = Image.open(Path(__file__).parents[2] / 'images/wizard.png')
-        chart_image = Image.open(Path(__file__).parents[2] / 'images/charts.jpeg')
+        wiz_image = Image.open(Path(__file__).parents[1] / 'images/wizard.png')
+        chart_image = Image.open(Path(__file__).parents[1] / 'images/charts.jpeg')
 
         st.image([wiz_image, chart_image], width=352)
 
