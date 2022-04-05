@@ -1,4 +1,9 @@
-from src.utils.get_data import get_numeric_data, get_random_columns_df, get_random_columns_str
+from src.utils.get_data import (
+    get_numeric_data,
+    get_text_data,
+    get_random_columns_df,
+    get_random_columns_str
+)
 import pandas as pd
 import streamlit as st
 import numpy as np
@@ -30,7 +35,8 @@ class DataViz:
         Returns:
             viz: Randomly chosen viz
         """
-        viz_magic = [self._line_plot, self._bar_plot, self._area_plot, self._scatter_chart]
+        viz_magic = [self._line_plot, self._bar_plot, self._area_plot, self._scatter_chart,
+                     self._hor_bar_plot]
         viz_pick = viz_magic[np.random.randint(0, len(viz_magic))]
         return viz_pick(self.df)
 
@@ -48,7 +54,7 @@ class DataViz:
 
     @staticmethod
     def _bar_plot(df: pd.DataFrame) -> st.bar_chart:
-        """Generate bar plot
+        """Generate vertical bar plot
         Args:
             df (pd.DataFrame): Dataframe to use for viz
         Returns:
@@ -56,6 +62,37 @@ class DataViz:
         """
         num_df = get_numeric_data(df)
         viz = st.bar_chart(get_random_columns_df(num_df, 3))
+        return viz
+
+    @staticmethod
+    def _hor_bar_plot(df: pd.DataFrame) -> st.altair_chart:
+        """Generate horizontal bar plot
+        Args:
+            df (pd.DataFrame): Dataframe to use for viz
+        Returns:
+            viz (st.altair_chart): Altair bar chart
+        """
+        num_df = get_numeric_data(df)
+        cols = get_random_columns_str(num_df, 2)
+        hor_bar = alt.Chart(df).mark_bar().encode(x=cols[0], cols[2]).interactive()
+        text = hor_bar.mark_text(color='white').encode(text = cols[0])
+        viz = st.altair_chart(hor_bar + text, use_container_width=True)
+        return viz
+
+    @staticmethod
+    def _stack_bar_plot(df: pd.DataFrame) -> st.altair_chart:
+        """Stacked bar plot
+        Args:
+            df (pd.DataFrame): Dataframe to use for viz
+        Returns:
+            viz (st.altair_chart): Altair stacked bar chart
+        """
+        num_df = get_numeric_data(df)
+        text_df = get_
+        cols = get_random_columns_str(num_df, 2)
+        hor_bar = alt.Chart(df).mark_bar().encode(x=cols[0], cols[2]).interactive()
+        text = hor_bar.mark_text(color='white').encode(text = cols[0])
+        viz = st.altair_chart(hor_bar + text, use_container_width=True)
         return viz
 
     @staticmethod
