@@ -1,6 +1,7 @@
 from src.utils.get_data import (
     get_numeric_data,
     get_text_data,
+    get_numeric_and_text_df,
     get_random_columns_df,
     get_random_columns_str
 )
@@ -8,17 +9,18 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 import altair as alt
-from typing import List, Union
+from typing import Union
+import plotly.express as px
 
 
 class DataViz:
     """Generate random visualizations using raw data file"""
+
     def __init__(self, df):
         self.df = df
 
     def show_random_viz(self):
         """Main process to create or change viz on button click"""
-        # TO DO: Add functionality to keep history of chosen viz
         if self.df is not None:
             self._button_random_viz()
             self._format_viz_button()
@@ -35,10 +37,25 @@ class DataViz:
         Returns:
             viz: Randomly chosen viz
         """
-        viz_magic = [self._line_plot, self._bar_plot, self._area_plot, self._scatter_chart,
-                     self._hor_bar_plot]
+        viz_magic = [self._line_plot, self._bar_plot, self._hor_bar_plot, self._stack_bar_plot,
+                     self._area_plot, self._scatter_chart, self._boxplot_chart, self._donut_chart,
+                     self._bubble_chart]
         viz_pick = viz_magic[np.random.randint(0, len(viz_magic))]
         return viz_pick(self.df)
+
+    @staticmethod
+    def _format_viz_button():
+        """Format the button to generate visualizations"""
+        st.write("##")
+        st.markdown("""
+                    <style>
+                    div.stButton > button:first-child {
+                        border-color: #ffffff;
+                    }
+                    </style>""", unsafe_allow_html=True
+                    )
+
+    # Start Chart magic
 
     @staticmethod
     def _line_plot(df: pd.DataFrame) -> st.line_chart:
@@ -74,9 +91,8 @@ class DataViz:
         """
         num_df = get_numeric_data(df)
         cols = get_random_columns_str(num_df, 2)
-        hor_bar = alt.Chart(df).mark_bar().encode(x=cols[0], cols[2]).interactive()
-        text = hor_bar.mark_text(color='white').encode(text = cols[0])
-        viz = st.altair_chart(hor_bar + text, use_container_width=True)
+        hor_bar = alt.Chart(df).mark_bar().encode(x=cols[0], y=cols[1])
+        viz = st.altair_chart(hor_bar, use_container_width=True)
         return viz
 
     @staticmethod
@@ -87,12 +103,15 @@ class DataViz:
         Returns:
             viz (st.altair_chart): Altair stacked bar chart
         """
-        num_df = get_numeric_data(df)
-        text_df = get_
-        cols = get_random_columns_str(num_df, 2)
-        hor_bar = alt.Chart(df).mark_bar().encode(x=cols[0], cols[2]).interactive()
-        text = hor_bar.mark_text(color='white').encode(text = cols[0])
-        viz = st.altair_chart(hor_bar + text, use_container_width=True)
+        num_text_df = get_numeric_and_text_df(df)
+        num_cols = get_random_columns_str(num_text_df, 1)
+        text_cols = get_random_columns_str(num_text_df, 2)
+        stack_bar = alt.Chart(num_text_df).mark_bar().encode(
+            x=text_cols[0],
+            y=num_cols[0],
+            color=text_cols[1]
+        )
+        viz = st.altair_chart(stack_bar, use_container_width=True)
         return viz
 
     @staticmethod
@@ -117,18 +136,53 @@ class DataViz:
         """
         num_df = get_numeric_data(df)
         cols = get_random_columns_str(num_df, 3)
-        scatter = alt.Chart(num_df).mark_point().encode(x=cols[0], y=cols[1], color=cols[2]).interactive()
+        scatter = alt.Chart(num_df).mark_point().encode(x=cols[0], y=cols[1], color=cols[2])
         viz = st.altair_chart(scatter, use_container_width=True)
         return viz
 
     @staticmethod
-    def _format_viz_button():
-        """Format the button to generate visualizations"""
-        st.write("##")
-        st.markdown("""
-                    <style>
-                    div.stButton > button:first-child {
-                        border-color: #ffffff;
-                    }
-                    </style>""", unsafe_allow_html=True
-                    )
+    def _boxplot_chart(df: pd.DataFrame) -> st.altair_chart:
+        """Generate boxplot
+        Args:
+            df (pd.DataFrame): Dataframe to use for viz
+        Returns:
+            viz (st.altair_chart): Boxplot using altair
+        """
+        num_df = get_numeric_data(df)
+        cols = get_random_columns_str(num_df, 2)
+        boxplot = alt.Chart(num_df).mark_point().encode(x=cols[0], y=cols[1])
+        viz = st.altair_chart(boxplot, use_container_width=True)
+        return viz
+
+    @staticmethod
+    def _donut_chart(df: pd.DataFrame) -> st.plotly_chart:
+        """Generate donut plot
+        Args:
+            df (pd.DataFrame): Dataframe to use for viz
+        Returns:
+            viz (st.plotly_chart): Donut chart using plotly
+        """
+        num_df = get_numeric_data(df)
+        num_data = get_random_columns_df(num_df, 1).unique()
+        text_df = get_text_data(df)
+        text_data = get_random_columns_df(text_df, 1).unique()
+        fig = px.pie(hole=0.2, labels=num_data, names=text_data)
+        viz = st.plotly_chart(fig)
+        return viz
+
+    @staticmethod
+    def _bubble_chart(df: pd.DataFrame) -> st.plotly_chart:
+        """Generate donut plot
+        Args:
+            df (pd.DataFrame): Dataframe to use for viz
+        Returns:
+            viz (st.plotly_chart): Donut chart using plotly
+        """
+        num_text_df = get_numeric_and_text_df(df)
+        num_cols = get_random_columns_str(num_text_df, 3)
+        text_cols = get_random_columns_str(num_text_df, 2)
+        bubble = px.scatter(data_frame=num_text_df, x=num_cols[0], y=num_cols[1],
+                            size=num_cols[2], color=text_cols[0], hover_name=text_cols[1],
+                            size_max=20)
+        viz = st.plotly_chart(bubble)
+        return viz

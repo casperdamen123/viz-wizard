@@ -4,3 +4,7 @@ class MissingMinimumAmountNumericColumns(Exception):
 
 class FileLoaderError(Exception):
     pass
+
+
+class MissingMinimumAmountTextColumns(Exception):
+    pass
