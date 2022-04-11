@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "vizwizard"
 version = "0.1.0"
-description = ""
+description = "Python dependencies for Viz Wizard"
 authors = ["Casper Damen"]
 
 [tool.poetry.dependencies]
