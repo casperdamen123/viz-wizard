@@ -23,15 +23,19 @@ Leverage the Wiz Magic by clicking on the Viz Magic button, the wizard will gene
 
 ## Technical details
 This application was build using [Streamlit](https://streamlit.io/). Python package dependencies are 
-managed using [Poetry](https://python-poetry.org/).
+managed using [Poetry](https://python-poetry.org/). A Dockerfile is provided to run the application as a 
+[Docker](https://www.docker.com/) container.
 
 ### Poetry
+If you would like to run the app locally, one easy option to install the dependencies would be to leverage Poetry:
 - Install poetry using the [official instructions](https://python-poetry.org/docs/#installation)
-- Use `poetry install` to create virtual environment and install requirements
+- `poetry install` to create virtual environment and install requirements
 
-## Streamlit
-- Use `streamlit run main.py` to deploy application locally
+### Streamlit
+After installing the dependencies you can run the app locally using:
+- `streamlit run main.py` 
 
-## Docker
-- Use `docker build -f Dockerfile -t viz-wizard:latest .` to build container
-- Use `docker run -p 8501:8501 --name viz-wizard-latest viz-wizard:latest` to run container
+### Docker
+Another option is to use a Docker container to run the app:
+- `docker build -f Dockerfile -t viz-wizard:latest .` to build container
+- `docker run -p 8501:8501 --name viz-wizard-latest viz-wizard:latest` to run container
