@@ -1,7 +1,15 @@
-FROM python:3.9
+FROM python:3.9.12
+
+# Install poetry
+RUN pip3 install poetry
+
+# Copy our Python requirements here and install using Poetry
+COPY . /app
+WORKDIR /app
+RUN poetry config virtualenvs.create false
+RUN poetry install
+
+# Copy app code and run application
 EXPOSE 8501
-WORKDIR /viz-wizard
-COPY requirements.txt ./requirements.txt
-RUN pip3 install -r requirements.txt
-COPY . .
-CMD streamlit run main.py
+WORKDIR /app
+CMD streamlit run ./main.py
