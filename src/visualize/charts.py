@@ -5,6 +5,7 @@ from src.utils.get_data import (
     get_random_columns_df,
     get_random_columns_str
 )
+from src.logger.event_logging import EventLogging
 import pandas as pd
 import streamlit as st
 import numpy as np
@@ -18,6 +19,7 @@ class DataViz:
 
     def __init__(self, df):
         self.df = df
+        self.logging = EventLogging()
 
     def show_random_viz(self):
         """Main process to create or change viz on button click"""
@@ -29,10 +31,14 @@ class DataViz:
 
     def _button_random_viz(self) -> st.button:
         """Button to click for viz generation"""
-        self.button = st.button('Click here to use Viz Magic on this dataset!')
+        st.write("")
+        st.write("")
+        col1, col2, col3 = st.columns([1, 1, 1])
+        self.button = col2.button('Click here to use Viz Magic!')
         return self.button
 
-    def _generate_random_viz(self) -> Union[st.plotly_chart, st.bar_chart, st.area_chart]:
+    def _generate_random_viz(self) -> Union[st.plotly_chart, st.bar_chart, st.area_chart,
+                                            st.altair_chart, st.line_chart]:
         """Pick random viz from pre-defined options
         Returns:
             viz: Randomly chosen viz
@@ -41,16 +47,20 @@ class DataViz:
                      self._area_plot, self._scatter_chart, self._boxplot_chart, self._donut_chart,
                      self._bubble_chart]
         viz_pick = viz_magic[np.random.randint(0, len(viz_magic))]
+
+        self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
         return viz_pick(self.df)
 
     @staticmethod
     def _format_viz_button():
         """Format the button to generate visualizations"""
-        st.write("##")
         st.markdown("""
                     <style>
                     div.stButton > button:first-child {
-                        border-color: #ffffff;
+                        border-color: #00FF00;
+                    }
+                    div.stButton > button:hover {
+                        color: #00FF00;
                     }
                     </style>""", unsafe_allow_html=True
                     )

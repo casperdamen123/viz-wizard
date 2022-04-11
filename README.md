@@ -1,9 +1,9 @@
 # The Viz Wizard
-Got some ugly flat data? And no idea know how to generate valuable insights from this flat data? 
+Got some ugly flat data? And no idea know how to generate valuable insights from this flat data?
 
 No problem, the Viz Wizard is here to provide you with some visualization magic
 
-![alt text](src/images/wiz_charts.png)
+<img src="src/images/wiz_charts.png" alt="drawing" width="300"/>
 
 ## General instructions
 
@@ -31,3 +31,7 @@ managed using [Poetry](https://python-poetry.org/).
 
 ## Streamlit
 - Use `streamlit run main.py` to deploy application locally
+
+## Docker
+- Use `docker build -f Dockerfile -t viz-wizard:latest .` to build container
+- Use `docker run -p 8501:8501 --name viz-wizard-latest viz-wizard:latest` to run container

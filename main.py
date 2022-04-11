@@ -2,7 +2,6 @@ from src.load.file_loader import FileLoader
 from src.template.homepage import HomePageSetup
 from src.validate.data_validation import DataValidation
 from src.visualize.charts import DataViz
-import streamlit as st
 
 # Setup template for homepage
 home = HomePageSetup()
