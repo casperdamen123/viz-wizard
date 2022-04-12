@@ -1,5 +1,8 @@
 FROM python:3.9.12
 
+# Set environemnt variables
+ENV KEY_VAULT_NAME=viz-wizard
+
 # Install poetry
 RUN pip3 install poetry
 
