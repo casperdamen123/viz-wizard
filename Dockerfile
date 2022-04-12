@@ -13,6 +13,5 @@ RUN poetry config virtualenvs.create false
 RUN poetry install
 
 # Copy app code and run application
-EXPOSE 8501
 WORKDIR /app
 CMD streamlit run ./main.py
