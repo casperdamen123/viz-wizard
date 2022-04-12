@@ -5,7 +5,7 @@ resources:
 - repo: self
 
 variables:
-  azureSubscription: 'Azure subscription 1'
+  azureSubscription: 'viz-wiz-subscription'
   appName: 'viz-wizard-web-app'
   dockerRegistryServiceConnection: '8b286508-02af-4515-99af-28a417f7c520'
   imageRepository: 'casperdamenvizwizard'
