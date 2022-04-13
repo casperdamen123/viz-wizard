@@ -38,13 +38,13 @@ stages:
         tags: |
           $(tag)
 
-  - task: AzureRmWebAppDeployment@4
-    displayName: 'Deploy Azure App Service'
-    inputs:
-      azureSubscription: 'viz-wiz-subscription'
-      appType: webAppContainer
-      WebAppName: 'viz-wiz-web-app'
-      ResourceGroupName: 'viz-wizard'
-      DockerNamespace: vizwizard.azurecr.io
-      DockerRepository: casperdamenvizwizard
-      DockerImageTag: '$(Build.BuildId)'
+    - task: AzureRmWebAppDeployment@4
+      displayName: 'Deploy Azure App Service'
+      inputs:
+        azureSubscription: 'viz-wiz-subscription'
+        appType: webAppContainer
+        WebAppName: 'viz-wiz-web-app'
+        ResourceGroupName: 'viz-wizard'
+        DockerNamespace: vizwizard.azurecr.io
+        DockerRepository: casperdamenvizwizard
+        DockerImageTag: '$(Build.BuildId)'
