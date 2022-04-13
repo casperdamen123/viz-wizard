@@ -10,7 +10,7 @@ resources:
 
 variables:
   azureSubscription: 'viz-wiz-subscription'
-  appName: 'viz-wiz-app'
+  appName: 'vizwizard-web-app'
   containerRegistry: 'vizwizard.azurecr.io'
   dockerRegistryServiceConnection: 'b2af3be6-2794-462b-851a-f5487079142d'
   imageRepository: 'casperdamenvizwizard'
