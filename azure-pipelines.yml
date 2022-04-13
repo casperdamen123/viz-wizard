@@ -9,10 +9,11 @@ resources:
 - repo: self
 
 variables:
-  # Container registry service connection established during pipeline creation
+  azureSubscription: 'viz-wiz-subscription'
+  appName: 'viz-wiz-app'
+  containerRegistry: 'vizwizard.azurecr.io'
   dockerRegistryServiceConnection: 'b2af3be6-2794-462b-851a-f5487079142d'
   imageRepository: 'casperdamenvizwizard'
-  containerRegistry: 'vizwizard.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
@@ -21,7 +22,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build and push stage
+  displayName: 'Build and push stage'
   jobs:
   - job: Build
     displayName: Build
@@ -29,7 +30,7 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: 'Build and push an image to container registry'
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
@@ -38,13 +39,9 @@ stages:
         tags: |
           $(tag)
 
-    - task: AzureRmWebAppDeployment@4
-      displayName: 'Deploy Azure App Service'
+    - task: AzureWebAppContainer@1
+      displayName: 'Azure Web App on Container Deploy'
       inputs:
-        azureSubscription: 'viz-wiz-subscription'
-        appType: webAppContainer
-        WebAppName: 'viz-wiz-web-app'
-        ResourceGroupName: 'viz-wizard'
-        DockerNamespace: vizwizard.azurecr.io
-        DockerRepository: casperdamenvizwizard
-        DockerImageTag: '$(Build.BuildId)'
+        azureSubscription: $(azureSubscription)
+        appName: $(appName)
+        containers: $(containerRegistry)/$(imageRepository):$(tag)
