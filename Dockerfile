@@ -1,17 +1,8 @@
 FROM python:3.9.12
 
-# Set environemnt variables
-ENV KEY_VAULT_NAME=viz-wizard
-
-# Install poetry
-RUN pip3 install poetry
-
-# Copy our Python requirements here and install using Poetry
-COPY . /app
 WORKDIR /app
-RUN poetry config virtualenvs.create false
-RUN poetry install
-
-# Copy app code and run application
-WORKDIR /app
-CMD streamlit run ./main.py
+COPY . .
+RUN pip install -r requirements.txt
+EXPOSE 8501
+ENTRYPOINT ["streamlit", "run"]
+CMD ["main.py"]
