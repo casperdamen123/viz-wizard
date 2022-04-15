@@ -5,7 +5,7 @@ from src.utils.get_data import (
     get_random_columns_df,
     get_random_columns_str
 )
-from src.logger.event_logging import EventLogging
+#from src.logger.event_logging import EventLogging
 import pandas as pd
 import streamlit as st
 import numpy as np
@@ -19,7 +19,7 @@ class DataViz:
 
     def __init__(self, df):
         self.df = df
-        self.logging = EventLogging()
+        #self.logging = EventLogging()
 
     def show_random_viz(self):
         """Main process to create or change viz on button click"""
@@ -48,7 +48,7 @@ class DataViz:
                      self._bubble_chart]
         viz_pick = viz_magic[np.random.randint(0, len(viz_magic))]
 
-        self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
+        #self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
         return viz_pick(self.df)
 
     @staticmethod

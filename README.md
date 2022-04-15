@@ -38,4 +38,4 @@ After installing the dependencies you can run the app locally using:
 ### Docker
 Another option is to use a Docker container to run the app:
 - `docker build -f Dockerfile -t viz-wizard:latest .` to build container
-- `docker run -p 8501:8501 --name viz-wizard viz-wizard:latest` to run container
+- `docker run -p 80:80 --name viz-wizard viz-wizard:latest` to run container
