@@ -38,7 +38,7 @@ stages:
       inputs:
         azureSubscription: 'Azure subscription 1 (daa3709f-d168-4857-845e-a5cc3c56256a)'
         appType: webAppContainer
-        WebAppName: 'viz-wizard-web-app'
+        WebAppName: 'viz-wiz-web-app'
         DockerNamespace: vizwizard.azurecr.io
         DockerRepository: vizwizardprod
         DockerImageTag: '$(Build.BuildId)'
