@@ -1,5 +1,6 @@
 import streamlit as st
 from src.logger.schema import schema
+from src.utils.get_secrets import get_gcp_secrets
 from google.cloud import bigquery
 from google.oauth2 import service_account
 from datetime import datetime
@@ -9,7 +10,7 @@ class EventLogging:
 
     def __init__(self):
         self.credentials = service_account.Credentials.from_service_account_info(
-            st.secrets["gcp_service_account"]
+            get_gcp_secrets('https://viz-wizard.vault.azure.net/')
         )
         self.client = bigquery.Client(credentials=self.credentials)
         self.project_id = 'viz-wizard'

@@ -5,14 +5,10 @@ from src.utils.get_data import (
     get_random_columns_df,
     get_random_columns_str
 )
-<<<<<<< HEAD
-#from src.logger.event_logging import EventLogging
-=======
-# from src.logger.event_logging import EventLogging
->>>>>>> 0168ef5 (random choice)
+
+from src.logger.event_logging import EventLogging
 import pandas as pd
 import streamlit as st
-import numpy as np
 import altair as alt
 from typing import Union
 import plotly.express as px
@@ -24,11 +20,7 @@ class DataViz:
 
     def __init__(self, df):
         self.df = df
-<<<<<<< HEAD
         #self.logging = EventLogging()
-=======
-        # self.logging = EventLogging()
->>>>>>> 0168ef5 (random choice)
 
     def show_random_viz(self):
         """Main process to create or change viz on button click"""
@@ -56,13 +48,9 @@ class DataViz:
                      self._area_plot, self._scatter_chart, self._boxplot_chart, self._donut_chart,
                      self._bubble_chart]
 
-<<<<<<< HEAD
-        #self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
-=======
         viz_pick = random.choice(viz_magic)
 
-        # self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
->>>>>>> 0168ef5 (random choice)
+        #self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
         return viz_pick(self.df)
 
     @staticmethod
