@@ -2,7 +2,7 @@ from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 
 def get_gcp_secrets(key_vault_uri: str) -> dict:
-
+    """Get Google Cloud Service Account secrets from Azure Key Vault"""
     credential = DefaultAzureCredential()
     client = SecretClient(vault_url=key_vault_uri, credential=credential)
 
@@ -10,7 +10,7 @@ def get_gcp_secrets(key_vault_uri: str) -> dict:
         "type": "service_account",
         "project_id": "viz-wizard",
         "private_key_id": client.get_secret(name='gcpprivatekeyid').value,
-        "private_key": client.get_secret(name='gcpprivatekey').value,
+        "private_key": client.get_secret(name='gcpprivatekey').value.replace('\\n', '\n'),
         "client_email": "viz-wizard@viz-wizard.iam.gserviceaccount.com",
         "client_id": client.get_secret(name='gcpclientid').value,
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
