@@ -20,7 +20,7 @@ class DataViz:
 
     def __init__(self, df):
         self.df = df
-        #self.logging = EventLogging()
+        self.logging = EventLogging()
 
     def show_random_viz(self):
         """Main process to create or change viz on button click"""
@@ -50,7 +50,7 @@ class DataViz:
 
         viz_pick = random.choice(viz_magic)
 
-        #self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
+        self.logging.log_generated_charts(viz_pick.__name__.replace('_', ''))
         return viz_pick(self.df)
 
     @staticmethod
