@@ -16,6 +16,6 @@ data_validation = DataValidation(df)
 validation_result = data_validation.validate_data()
 
 # Generate visualization
-if validation_result:
+if validation_result == True:
     data_viz = DataViz(df)
     data_viz.show_random_viz()

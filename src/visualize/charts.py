@@ -59,10 +59,14 @@ class DataViz:
         st.markdown("""
                     <style>
                     div.stButton > button:first-child {
-                        border-color: #00FF00;
+                        border-color: #063970;
+                        background-color: #063970;
+                        color: #FFFFFF
                     }
                     div.stButton > button:hover {
-                        color: #00FF00;
+                        border-color: #5EB70D;
+                        background-color: #5EB70D;
+                        color: #FFFFFF;
                     }
                     </style>""", unsafe_allow_html=True
                     )
