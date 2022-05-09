@@ -20,8 +20,11 @@ class DataValidation:
         if self.df is not None:
             validations.append(self._check_numeric_columns(df=self.df, n=self.num_numeric_columns))
             validations.append(self._check_text_columns(df=self.df, n=self.num_text_columns))
+            validation_result = all(validations)
 
-        validation_result = all(validations)
+        else:
+            validation_result = False
+            
         return validation_result
 
     @staticmethod
