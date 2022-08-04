@@ -54,3 +54,4 @@ resource keyVaulSecret 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = 
 }
 
 output keyVaultUri string = keyVault.properties.vaultUri
+output keyVaultName string = keyVault.name
